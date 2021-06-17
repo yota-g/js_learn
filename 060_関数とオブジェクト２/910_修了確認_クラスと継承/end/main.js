@@ -88,3 +88,4 @@ function loginController(user) {
 
 // loginController(new User('Bob'));
 loginController(new AdminUser('Bob'));
+///コードの改修が会ったときに既存のものに影響を与えずにコードの機能追加がしやすいのがクラスでの実装の特徴。
