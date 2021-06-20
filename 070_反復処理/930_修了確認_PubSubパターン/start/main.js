@@ -12,7 +12,7 @@ function customFn2() {
 function customFn3() {
 	console.log('customFn3');
 }
-
+// Map , Set//1つのトリガーに関して２つ以上同じ関数が登録されていたときに一回にしたいのでSetを使用。こうするとバグの原因を防ぐことができる。
 events.on('beforeInit', customFn1);
 events.on('beforeInit', customFn2);
 events.on('afterInit', customFn3);
