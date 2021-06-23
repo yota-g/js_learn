@@ -35,3 +35,38 @@ async function myFetch(fileName) {
 	const json = await response.json();
 	return json;
 }
+
+//即時関数として実行する。
+(async function (json) {
+	const me = await myFetch('user1.json');
+	// console.log(me);
+	console.log(`--${me.name}'s timeline--`);
+	const friendList = await myFetch(`friendsOf${me.id}.json`);
+	// console.log(friendList); //friendListを反復可能オブジェクトとして格納して、Promise.allに入れる。
+	friendIds = new Set();
+	// console.log(friendList.friendIds)
+	for ( const id of friendList.friendIds){
+		friendIds.add(myFetch(`user${id}.json`));
+	}
+	const friends = await Promise.all(friendIds);
+	//並行処理
+	console.log(friends);
+
+	msgIds = new Set();
+	for ( const friend of friends){
+		msgIds.add(myFetch(`message${friend.latestMsgId}.json`));
+	}
+	const msgs = await Promise.all(msgIds);
+	console.log(msgs)
+	for(const friend of friends) {
+		for ( const msg of msgs) {
+			if (friend.id === msg.userId ){
+				console.log(`${friend.name} says: ${msg.message}`);
+			}
+		}
+	}
+})();
+
+
+
+
