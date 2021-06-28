@@ -27,8 +27,14 @@
             コースへ
         </a>
     </div>
+    <script nomodule>alert('nomodule')</script>
+    <!-- モジュールに対応していない時のみこの上のタグが実行される。 今回はアラートを表示するようにできる。-->
     <script src="main.js" defer></script>
     <script type="module" src="moduleB.js"></script>
+    <script src="main.js" defer></script>
+    <script type="module" src="moduleB.js"></script>
+    <!-- main.jsは読み込んだ回数分実行されるが、moduleは一回しか実行されない。 -->
+    <h1>Module Lecture</h1>
 </body>
 
 </html>

@@ -43,7 +43,7 @@ async function myFetch(fileName) {
 	console.log(`--${me.name}'s timeline--`);
 	const friendList = await myFetch(`friendsOf${me.id}.json`);
 	// console.log(friendList); //friendListを反復可能オブジェクトとして格納して、Promise.allに入れる。
-	friendIds = new Set();
+	const friendIds = new Set(); //変数指定ない場合はグローバルオブジェクトに設定されてしまうのでバグの原因になるので注意する。
 	// console.log(friendList.friendIds)
 	for ( const id of friendList.friendIds){
 		friendIds.add(myFetch(`user${id}.json`));
