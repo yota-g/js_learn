@@ -66,8 +66,6 @@ class DataSource {
 					DataSource.set(KEY, target);
 				}
 			});
-
-
 			return result;
 		}
 	});

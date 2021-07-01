@@ -32,7 +32,7 @@ class MyArray extends Array {
 	}
 
 	map(callback) {
-		const newInstance = new MyArray();
+		const newInstance = new MyArray();//配列
 		for(let i = 0; i < this.length; i++) {
 			const result = callback(this[i], i, this);
 			newInstance.push(result);

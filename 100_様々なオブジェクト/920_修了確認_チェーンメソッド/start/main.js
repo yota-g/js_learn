@@ -26,6 +26,44 @@ class IteratableObject {
 		return this;
 	}
 
+	set (key , value){
+		this[key] = value;
+		return this;
+	}
+
+	forEach (callback) {
+		for ( let [ k, v ] of this){
+			//iteratorのおかげでfor ofが使用できるので反復させる。
+			callback(v, k ,this);
+		}
+	}
+
+	map (callback) {
+		const newInstance = new IteratableObject(); //オブジェクト
+		for ( let [ k, v ] of this){
+			//iteratorのおかげでfor ofが使用できるので反復させる。
+			newInstance[k] = callback(v, k ,this);
+		}
+		return newInstance;
+	}
+
+	filter (callback) {
+		const newInstance = new IteratableObject(); 
+		for ( let [ k, v ] of this){
+			if(callback(v, k, this)){
+				newInstance[k] = v; //条件に合うものに対してインスタンスを作成することができる。
+				//callbackがtureの場合のみ実行される。
+			}
+		}
+		return newInstance;
+	}
+
+	*[Symbol.iterator]() {// 通常のオブジェクトは反復操作がメソッドとしてないので、for ofを使えないが、クラスで定義してあげると反復可能なオブジェクトが作れるということを理解しておく。
+		for (let key in this) {
+			yield [key , this[key]];
+		}//オブジェクトがプロパティでループを行い、呼び出し元に値を返すことになる。
+	}
+
 }
 
 function prefix(v, i, obj) {
@@ -37,6 +75,14 @@ const original = new IteratableObject({
 	key2: 'value2',
 	key3: 'value3',
 });
+
+original.forEach(v => {
+	console.log(v);
+});
+　
+// for (let [k, v] of original ) {
+// 	console.log(k,v); //propと値が取れることがわかる。
+// }
 
 const result = original
 	.map(prefix)
